@@ -50,7 +50,7 @@
 									<th colspan="2">졸업구분</th>
 									<td>
 										<ul class="checkbox st1">
-											<li v-for="item in BasicInfo.ScholarShip">
+											<li v-for="item in BasicInfo.ScholarShip" >
 												<input type="radio" v-model="ScholarShip" :id="'rdoScholarship'+item.value" :value="item.value" name="rdoScholarship">
 												<label :for="'rdoScholarship'+item.value" class="check">{{item.text}}</label>
 											</li>
@@ -62,7 +62,7 @@
 									<th>학생부교과</th>
 									<td>
 										<ul class="checkbox st1">
-											<li v-for="item in BasicInfo.RdoSelType">
+											<li v-for="item in BasicInfo.RdoSelType" v-if="item.value < 7">
 												<input :id="'RdoSelType'+item.value" type="radio" :value="item.value" name="rdoSelType">
 												<label :for="'RdoSelType'+item.value" class="check">{{item.text}}</label>
 											</li>
@@ -73,13 +73,9 @@
 									<th>실기/실적</th>
 									<td>
 										<ul class="checkbox st1">
-											<li>
-												<input id="rdoSelType7" type="radio" value="7" name="rdoSelType">
-												<label for="rdoSelType7" class="check">실기전형</label>
-											</li>
-											<li>
-												<input id="rdoSelType8" type="radio" value="8" name="rdoSelType">
-												<label for="rdoSelType8" class="check">특기자전형</label>
+											<li v-for="item in BasicInfo.RdoSelType" v-if="item.value > 6">
+												<input :id="'RdoSelType'+item.value" type="radio" :value="item.value" name="rdoSelType">
+												<label :for="'RdoSelType'+item.value" class="check">{{item.text}}</label>
 											</li>
 										</ul>
 									</td>
