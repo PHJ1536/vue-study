@@ -31,7 +31,7 @@
     },
 
     // 실제 입력 데이터 연동
-    ScholarShip : '',
+    ScholarShip : '1',
     SelTypeCode : '1',
     ScoreInput1 : [
     ],
@@ -39,6 +39,9 @@
     ],
     ScoreInput3 : [
     ],
+
+    // attendance : [
+    // ],
 
   },
 
@@ -119,7 +122,7 @@
     RemoveScoreInput1 : function(index){
       console.log(this.ScoreInput1.length);
       if(this.ScoreInput1.length == 1){
-        alert("지우지마");
+        //alert("지우지마");
         return;
       }
       this.ScoreInput1.splice(index, 1);
