@@ -336,13 +336,13 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ><!--v-model="attendance"-->
-                                    <td><input type="number" min="0" id="Att2" class="type1 st3" value="0"/> 회</td>
-                                    <td><input type="number" min="0" id="Att3" class="type1 st3" value="0"/> 회</td>
-                                    <td><input type="number" min="0" id="Att4" class="type1 st3" value="0"/> 회</td>
-                                    <td><input type="number" min="0" id="Att5" class="type1 st3" value="0" disabled="disabled"/> 일</td>
-                                    <td><input type="number" min="0" id="Att1" class="type1 st3" value="0"/> 일</td>
-                                    <td><input type="number" min="0" id="TotAttend" class="type1 st3" value="0" disabled="disabled"/> 일</td>
+                                <tr v-for="item in Attendance">
+                                    <td><input type="number" min="0" v-model="item.Late" class="type1 st3"/> 회</td>
+                                    <td><input type="number" min="0" v-model="item.EarlyDepart" class="type1 st3"/> 회</td>
+                                    <td><input type="number" min="0" v-model="item.Absent" class="type1 st3"/> 회</td>
+                                    <td><input type="number" min="0" v-bind:value="totalAttend[0]" class="type1 st3"  disabled="disabled"/> 일</td>
+                                    <td><input type="number" min="0" v-model="item.Truancy" class="type1 st3"/> 일</td>
+                                    <td><input type="number" min="0" v-bind:value="totalAttend[1]" class="type1 st3" disabled="disabled"/>일</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -452,9 +452,9 @@
                                 </tr>
                                 <tr>
                                     <td>예체능</td>
-                                    <td><span id="RstTotalScore7"></span></td>
-                                    <td><span id="RstTotalScore8"></span></td>
-                                    <td><span id="RstTotalScore9"></span></td>
+                                    <td><span id="RstTotalScore7">{{totalScore1[2]}}</span></td>
+                                    <td><span id="RstTotalScore8">{{totalScore1[3]}}</span></td>
+                                    <td><span id="RstTotalScore9">{{totalAttend[2]}}</span></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -474,7 +474,7 @@
                                     <th>평균점수</th>
                                 </tr>
                                 <tr>
-                                    <td colspan="2"><span id="RstTotalScore10"></span></td>
+                                    <td colspan="2"><span id="RstTotalScore10">{{totalScore2}}</span></td>
                                 </tr>
                             </tbody>
                         </table>

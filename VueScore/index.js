@@ -96,6 +96,14 @@
         History: '',
         EtcSub: '',
       },
+      DefaultAttendance: {
+        Late: '0',
+        EarlyDepart: '0',
+        Absent: '0',
+        Days: '',
+        Truancy: '0',
+        TotalAttend:'',
+      },
     },
 
     // 실제 입력 데이터 연동
@@ -105,6 +113,7 @@
     ScoreInput2: [],
     ScoreInput3: [],
     ScoreInput4: [],
+    Attendance: [],
 
   },
 
@@ -119,6 +128,8 @@
     this.AddScoreInput2Rnd();
     this.AddScoreInput3Rnd();
     this.AddScoreInput4Rnd();
+    let newItem = {...this.BasicInfo.DefaultAttendance};
+    this.Attendance.push(newItem);
   },
 
   // mounted: function () {
@@ -143,7 +154,7 @@
       return this.SelTypeCode == '7' || this.SelTypeCode == '8';
     },
     ScoreTotal2Display: function () {
-      return this.SelTypeCode < 7;
+      return this.ScholarShip < '4' && this.SelTypeCode < 7;
     },
 
     SelTypeIsFirst: function () {
@@ -191,8 +202,31 @@
       // return this.BasicInfo.SelTypeCode.slice(6);
     },
 
+    totalAttend: function(){
+
+      let days=0, totalDays=0, attendDay=0;
+
+      function toNumber(n) {
+        if (isNaN(n)) return 0;
+        return Number(n);
+      }
+     
+      this.Attendance.forEach(function(data){
+
+        let late = toNumber(data.Late), earlyDep = toNumber(data.EarlyDepart),absent = toNumber(data.Absent);
+        let truancy = toNumber(data.Truancy);
+
+        days = Math.floor((late + earlyDep + absent)/3);
+        totalDays = truancy + toNumber(days);
+
+        attendDay = 50-totalDays;
+      });
+
+      return [days, totalDays, attendDay];
+    },
+
     totalScore1: function () {
-      let scoreSum =0, unitSum=0, 
+      let scoreSum =0, unitSum=0,
       InmunAvgUnit, InmunSubjectScore,
       InmunScoreSum=0, InmunUnitSum=0,
       NatureAvgUnit, NatureSubjectScore,
@@ -209,15 +243,15 @@
         return Number(n);
       }
 
-      
-      this.ScoreInput1.forEach(function (d) {
-        let unit1 = toNumber(d.Unit1),grade1 = toNumber(d.Grade1);
-        let unit2 = toNumber(d.Unit2),grade2 = toNumber(d.Grade2);
+     
+      this.ScoreInput1.forEach(function (data) {
+        let unit1 = toNumber(data.Unit1),grade1 = toNumber(data.Grade1);
+        let unit2 = toNumber(data.Unit2),grade2 = toNumber(data.Grade2);
 
         scoreSum += unit1 * grade1 + unit2 * grade2;
         unitSum += unit1 + unit2;
-      
-        if(d.Subject == 1 || d.Subject == 2 | d.Subject == 3){//공통 과목이면
+     
+        if(data.Subject == 1 || data.Subject == 2 | data.Subject == 3){//공통 과목이면
           JayuScoreSum += (unit1 * grade1 + unit2 * grade2);
           JayuUnitSum += (unit1 + unit2);
 
@@ -226,14 +260,14 @@
           NatureScoreSum += (unit1 * grade1 + unit2 * grade2);
           NatureUnitSum += (unit1 + unit2);
         }
-        else if (d.Subject == 4) {//사회 과목이면
+        else if (data.Subject == 4) {//사회 과목이면
           //인문사회/예체능
           JayuScoreSum += (unit1 * grade1 + unit2 * grade2);
           JayuUnitSum += (unit1 + unit2);
           InmunScoreSum += (unit1 * grade1 + unit2 * grade2);
           InmunUnitSum += (unit1 + unit2);
         }
-        else if (d.Subject == 5) {//과학 과목이면
+        else if (data.Subject == 5) {//과학 과목이면
           //자연
           JayuScoreSum += (unit1 * grade1 + unit2 * grade2);
           JayuUnitSum += (unit1 + unit2);
@@ -245,14 +279,24 @@
         console.log("자연누적: ",NatureUnitSum);
         console.log("인문누적: ",InmunUnitSum);
 
-        JayuAvgUnit = toNumber((scoreSum / unitSum).toFixed(2));
-        JayuSubjectScore = toNumber(((9 - JayuAvgUnit) * (300 / 8)).toFixed(2));
-
-        NatureAvgUnit = toNumber((NatureScoreSum / NatureUnitSum).toFixed(2));
-        NatureSubjectScore = toNumber(((9 - NatureAvgUnit) * (300 / 8)).toFixed(2));
-
-        InmunAvgUnit = toNumber((InmunScoreSum / InmunUnitSum).toFixed(2));
-        InmunSubjectScore = toNumber(((9 - InmunAvgUnit) * (300 / 8)).toFixed(2));
+        if(this.SelTypeCode=='7'){
+          InmunAvgUnit = toNumber((InmunScoreSum / InmunUnitSum).toFixed(2));
+          InmunSubjectScore = toNumber(((9 - InmunAvgUnit) * (250 / 8)).toFixed(2));
+        }
+        else if(this.SelTypeCode=='8'){
+          InmunAvgUnit = toNumber((InmunScoreSum / InmunUnitSum).toFixed(2));
+          InmunSubjectScore = toNumber(((9 - InmunAvgUnit) * (350 / 8)).toFixed(2));
+        }
+        else{
+          JayuAvgUnit = toNumber((scoreSum / unitSum).toFixed(2));
+          JayuSubjectScore = toNumber(((9 - JayuAvgUnit) * (300 / 8)).toFixed(2));
+ 
+          NatureAvgUnit = toNumber((NatureScoreSum / NatureUnitSum).toFixed(2));
+          NatureSubjectScore = toNumber(((9 - NatureAvgUnit) * (300 / 8)).toFixed(2));
+ 
+          InmunAvgUnit = toNumber((InmunScoreSum / InmunUnitSum).toFixed(2));
+          InmunSubjectScore = toNumber(((9 - InmunAvgUnit) * (300 / 8)).toFixed(2));
+        }
 
         if(NatureAvgUnit==0){
           NatureAvgUnit = null;
@@ -266,7 +310,23 @@
 
       return [JayuAvgUnit, JayuSubjectScore, InmunAvgUnit, InmunSubjectScore, NatureAvgUnit, NatureSubjectScore];
     },
+    totalScore2: function() {
 
+      let TotalGeomJeong = 0;
+
+      function toNumber(n) {
+        if (isNaN(n)) return 0;
+        return Number(n);
+      }
+      this.ScoreInput4.forEach(function (data){
+        let KorScore=toNumber(data.Korean), EngScore=toNumber(data.English), MathScore=toNumber(data.Math),
+        SocScore=toNumber(data.Social), SciScore=toNumber(data.Science),HisScore=toNumber(data.History), EtcScore=toNumber(data.EtcSub);
+
+        TotalGeomJeong = toNumber((((KorScore+EngScore+MathScore+SocScore+SciScore+HisScore+EtcScore)/5)*3).toFixed(2));
+      });
+
+      return TotalGeomJeong;
+    },
 
   },
   methods: {
