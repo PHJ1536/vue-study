@@ -139,6 +139,13 @@
       return this.ScholarShip == '4';
     },
 
+    ScoreTotal1Display: function () {
+      return this.SelTypeCode == '7' || this.SelTypeCode == '8';
+    },
+    ScoreTotal2Display: function () {
+      return this.SelTypeCode < 7;
+    },
+
     SelTypeIsFirst: function () {
       var group = {
         '학생부교과': [],
