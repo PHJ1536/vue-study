@@ -151,7 +151,7 @@
                             </tbody>
                         </table>
                         <div class="btn_area right">
-                            <a href="javascript:void(0)" @click="AddScoreInput1" class="btn st3 add">과목 추가</a>
+                            <a href="javascript:void(0)" @click="AddScoreInput1()" class="btn st3 add">과목 추가</a>
                         </div>
                     </div>
                    
@@ -217,7 +217,7 @@
                             </tbody>
                         </table>
                         <div class="btn_area right">
-                            <a href="javascript:void(0)" @click="AddScoreInput2" class="btn st3 add">과목 추가</a>
+                            <a href="javascript:void(0)" @click="AddScoreInput2()" class="btn st3 add">과목 추가</a>
                         </div>
                     </div>
 
@@ -311,11 +311,11 @@
                             </tbody>
                         </table>
                         <div class="btn_area right">
-                            <a href="javascript:void(0)" @click="AddScoreInput3" class="btn st3 add">과목 추가</a>
+                            <a href="javascript:void(0)" @click="AddScoreInput3()" class="btn st3 add">과목 추가</a>
                         </div>
                     </div>
 
-                    <div class="section" v-show="ScoreInput1Display || ScoreInput2Display">
+                    <div class="section" v-show="ScoreInput1Display || ScoreInput2Display || ScoreInput3Display">
                         <h4>출결성적</h4>
                         <table border="0" cellpadding="0" cellspacing="0" class="tbl_type1 st2" id="tblAttend">
                             <caption>출결성적</caption>
@@ -364,42 +364,42 @@
                                     <th>검정고시 취득성적</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr align="center" class="ti2">
+                            <tbody v-for="(item, idx) in ScoreInput4" :key="'scoreInput'+idx">
+                                <tr class="ti2">
                                     <td class="td_3" colspan="2">국어</td>
-                                    <td><input type="text" class="type1 st3" id="txtNum1" name="txtNum1" size="3" maxlength="3"></td>
+                                    <td><input type="text" class="type1 st3" id="txtNum1" v-model="item.Korean" size="3" maxlength="3"></td>
                                 </tr>
-                                <tr align="center" class="ti2">
+                                <tr class="ti2">
                                     <td class="td_3" colspan="2">영어</td>
-                                    <td><input type="text" class="type1 st3" id="txtNum2" name="txtNum2" size="3" maxlength="3"></td>
+                                    <td><input type="text" class="type1 st3" id="txtNum2" v-model="item.English" size="3" maxlength="3"></td>
                                 </tr>
-                                <tr align="center" class="ti2">
+                                <tr class="ti2">
                                     <td class="td_3" colspan="2">수학</td>
-                                    <td><input type="text" class="type1 st3" id="txtNum3" name="txtNum3" size="3" maxlength="3"></td>
+                                    <td><input type="text" class="type1 st3" id="txtNum3" v-model="item.Math" size="3" maxlength="3"></td>
                                 </tr>
-                                <tr align="center" class="ti2">
+                                <tr class="ti2">
                                     <td class="td_3" colspan="2">사회</td>
-                                    <td><input type="text" class="type1 st3" id="txtNum4" name="txtNum4" size="3" maxlength="3"></td>
+                                    <td><input type="text" class="type1 st3" id="txtNum4" v-model="item.Social" size="3" maxlength="3"></td>
                                 </tr>
-                                <tr align="center" class="ti2">
+                                <tr class="ti2">
                                     <td class="td_3" colspan="2">과학</td>
-                                    <td><input type="text" class="type1 st3" id="txtNum5" name="txtNum5" size="3" maxlength="3"></td>
+                                    <td><input type="text" class="type1 st3" id="txtNum5" v-model="item.Science" size="3" maxlength="3"></td>
                                 </tr>
-                                <tr align="center" class="ti2">
+                                <tr class="ti2">
                                     <td class="td_3" colspan="2">한국사</td>
-                                    <td><input type="text" class="type1 st3" id="txtNum6" name="txtNum6" size="3" maxlength="3"></td>
+                                    <td><input type="text" class="type1 st3" id="txtNum6" v-model="item.History" size="3" maxlength="3"></td>
                                 </tr>
-                                <tr align="center" class="ti2">
+                                <tr class="ti2">
                                     <td class="td_3">선택</td>
                                     <td><input type="text" class="type1 st3" /></td>
-                                    <td><input type="text" class="type1 st3" id="txtNum7" name="txtNum7" size="3" maxlength="3"></td>
+                                    <td><input type="text" class="type1 st3" id="txtNum7" v-model="item.EtcSub" size="3" maxlength="3"></td>
                                 </tr>
 
                             </tbody>
                         </table>
                     </div>
                    
-                    <div class="section st1" id="divResult1">
+                    <div class="section st1" id="divResult1" v-show="ScoreInput1Display || ScoreInput2Display || ScoreInput3Display">
                         <h4>산출결과</h4>
                         <table border="0" cellpadding="0" cellspacing="0" class="tbl_type1 st3">
                             <caption>산출결과</caption>
@@ -416,18 +416,18 @@
                                 </tr>
                                 <tr>
                                     <td>인문사회/예체능</td>
-                                    <td><span id="avgTotalScore1"></span></td>
-                                    <td><span id="totalScore1"></span></td>
+                                    <td><span id="avgTotalScore1">{{totalScore1[2]}}</span></td>
+                                    <td><span id="totalScore1">{{totalScore1[3]}}</span></td>
                                 </tr>
                                 <tr>
                                     <td>자연</td>
-                                    <td><span id="avgTotalScore2"></span></td>
-                                    <td><span id="totalScore2"></span></td>
+                                    <td><span id="avgTotalScore2">{{totalScore1[4]}}</span></td>
+                                    <td><span id="totalScore2">{{totalScore1[5]}}</span></td>
                                 </tr>
                                 <tr>
                                     <td>자유전공학부</td>
-                                    <td><span id="avgTotalScore3"></span></td>
-                                    <td><span id="totalScore3"></span></td>
+                                    <td><span id="avgTotalScore3">{{totalScore1[0]}}</span></td>
+                                    <td><span id="totalScore3">{{totalScore1[1]}}</span></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -460,7 +460,7 @@
                         </table>
                     </div>
                    
-                    <div class="section st1" id="divResult3">
+                    <div class="section st1" id="divResult3" v-show="ScoreInput4Display">
                         <h4>산출결과</h4>
                         <table border="0" cellpadding="0" cellspacing="0" class="tbl_type1 st3">
                             <caption>산출결과</caption>
