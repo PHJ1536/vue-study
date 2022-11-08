@@ -279,15 +279,15 @@
         console.log("자연누적: ",NatureUnitSum);
         console.log("인문누적: ",InmunUnitSum);
 
-        if(this.SelTypeCode=='7'){
+        if(this.SelTypeCode == '7'){//실기전형일 경우 실질반영점수 250
           InmunAvgUnit = toNumber((InmunScoreSum / InmunUnitSum).toFixed(2));
           InmunSubjectScore = toNumber(((9 - InmunAvgUnit) * (250 / 8)).toFixed(2));
         }
-        else if(this.SelTypeCode=='8'){
+        else if(this.SelTypeCode == '8'){//특기자전형일 경우 실질반영점수 350
           InmunAvgUnit = toNumber((InmunScoreSum / InmunUnitSum).toFixed(2));
           InmunSubjectScore = toNumber(((9 - InmunAvgUnit) * (350 / 8)).toFixed(2));
         }
-        else{
+        else{//그 외의 경우 실질반영점수 300
           JayuAvgUnit = toNumber((scoreSum / unitSum).toFixed(2));
           JayuSubjectScore = toNumber(((9 - JayuAvgUnit) * (300 / 8)).toFixed(2));
  
@@ -305,8 +305,8 @@
           InmunAvgUnit = null;
           InmunSubjectScore = null;;
         }
-      }
-      );
+      }.bind(this) //SelTypeCode가 바깥에 선언되어있어서 연결?시켜줌...
+      )
 
       return [JayuAvgUnit, JayuSubjectScore, InmunAvgUnit, InmunSubjectScore, NatureAvgUnit, NatureSubjectScore];
     },
