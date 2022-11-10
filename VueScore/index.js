@@ -106,9 +106,13 @@
       },
     },
 
+    isShow1: false,
+    isShow2: false,
+    isShow3: false,
+
     // 실제 입력 데이터 연동
-    ScholarShip: '3',
-    SelTypeCode: '1',
+    ScholarShip: '',
+    SelTypeCode: '',
     ScoreInput1: [],
     ScoreInput2: [],
     ScoreInput3: [],
@@ -120,19 +124,23 @@
 
   created: function () {
 
-    // let newItem = {...this.BasicInfo.DefaultScoreInput1};
-    // this.ScoreInput1.push(newItem);
-    this.AddScoreInput1Rnd();
-    this.AddScoreInput2Rnd();
-    this.AddScoreInput2Rnd();
-    this.AddScoreInput2Rnd();
-    this.AddScoreInput2Rnd();
-    this.AddScoreInput3Rnd();
-    this.AddScoreInput4Rnd();
-    let newItem = {
-      ...this.BasicInfo.DefaultAttendance
-    };
-    this.Attendance.push(newItem);
+    let newItem = {...this.BasicInfo.DefaultScoreInput1};
+    this.ScoreInput1.push(newItem);
+    let newItem2 = {...this.BasicInfo.DefaultScoreInput1};
+    this.ScoreInput2.push(newItem2);
+    let newItem3 = {...this.BasicInfo.DefaultScoreInput1};
+    this.ScoreInput3.push(newItem3);
+    let newItem4 = {...this.BasicInfo.DefaultScoreInput1};
+    this.ScoreInput4.push(newItem4);
+    // this.AddScoreInput1Rnd();
+    // this.AddScoreInput2Rnd();
+    // this.AddScoreInput2Rnd();
+    // this.AddScoreInput2Rnd();
+    // this.AddScoreInput2Rnd();
+    // this.AddScoreInput3Rnd();
+    // this.AddScoreInput4Rnd();
+    let newItem5 = {...this.BasicInfo.DefaultAttendance};
+    this.Attendance.push(newItem5);
   },
 
   // mounted: function () {
@@ -153,12 +161,13 @@
       return this.ScholarShip == '4';
     },
 
-    ScoreTotal1Display: function () {
-      return this.SelTypeCode == '7' || this.SelTypeCode == '8';
-    },
-    ScoreTotal2Display: function () {
-      return this.ScholarShip < '4' && this.SelTypeCode < 7;
-    },
+    // 임시 산출결과 제어 함수
+    // ScoreTotal1Display: function () {
+    //   return this.SelTypeCode == '7' || this.SelTypeCode == '8';
+    // },
+    // ScoreTotal2Display: function () {
+    //   return this.ScholarShip < '4' && this.SelTypeCode < 7;
+    // },
 
     SelTypeIsFirst: function () {
       var group = {
@@ -307,6 +316,7 @@
           }
 
         }.bind(this));
+        
         console.log("자유누적: ", JayuUnitSum);
         console.log("자연누적: ", NatureUnitSum);
         console.log("인문누적: ", InmunUnitSum);
@@ -730,5 +740,27 @@
 
       this.AddScoreInput4(newItem);
     },
+
+    ResultRemove: function() {
+      this.isShow1=false, this.isShow2=false, this.isShow3=false;
+    },
+
+    ShowResult: function () {
+      if(this.ScholarShip == '1' || this.ScholarShip == '2' || this.ScholarShip == '3'){
+        if(this.SelTypeCode == '7' || this.SelTypeCode == '8'){
+          this.isShow2=true;
+        }
+        else{
+          this.isShow1=true;
+        }
+      }
+      else if(this.ScholarShip == '4'){
+        this.isShow3=true;
+      }
+      else{
+        this.isShow1=false, this.isShow2=false, this.isShow3=false;
+      }
+    },
+
   },
 })

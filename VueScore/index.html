@@ -40,7 +40,7 @@
 
                 <div class="content_area">
 
-                    <div class="section st1">
+                    <div class="section st1" @click="ResultRemove()">
                         <h4>지원구분</h4>
                         <table border="0" cellpadding="0" cellspacing="0" class="tbl_type1 st1">
                             <caption>지원구분</caption>
@@ -204,11 +204,11 @@
                                     <td><input type="text" class="type1 st2"  v-model="item.Unit1" size="3" maxlength="2"></td>
                                     <td><input type="text" class="type1 st2"  v-model="item.Grade1"  size="3" maxlength="2"></td>
                                     <td><input type="text" class="type1 st2"  v-model="item.SameGrade1"  size="3" maxlength="2"></td>
-                                    <td><input type="text" class="type1 st2"  v-model="item.Jaejeok1" size="3" maxlength="2"></td>
+                                    <td><input type="text" class="type1 st2"  v-model="item.Jaejeok1" size="3" maxlength="3"></td>
                                     <td><input type="text" class="type1 st2"  v-model="item.Unit2" size="3" maxlength="2"></td>
                                     <td><input type="text" class="type1 st2"  v-model="item.Grade2"  size="3" maxlength="2"></td>
                                     <td><input type="text" class="type1 st2"  v-model="item.SameGrade2"  size="3" maxlength="2"></td>
-                                    <td><input type="text" class="type1 st2"  v-model="item.Jaejeok2" size="3" maxlength="2"></td>
+                                    <td><input type="text" class="type1 st2"  v-model="item.Jaejeok2" size="3" maxlength="3"></td>
                                    
                                     <td class="del">
                                         <a href="javascript:void(0)" @click="RemoveScoreInput2(idx)" title="삭제"></a>
@@ -398,8 +398,8 @@
                             </tbody>
                         </table>
                     </div>
-                   
-                    <div class="section st1" id="divResult1" v-show="ScoreTotal2Display">
+
+                    <div class="section st1" id="divResult1" v-show="isShow1">
                         <h4>산출결과</h4>
                         <table border="0" cellpadding="0" cellspacing="0" class="tbl_type1 st3">
                             <caption>산출결과</caption>
@@ -433,7 +433,7 @@
                         </table>
                     </div>
                    
-                    <div class="section st1" id="divResult2" v-show="!ScoreInput4Display && ScoreTotal1Display">
+                    <div class="section st1" id="divResult2" v-show="isShow2">
                         <h4>산출결과</h4>
                         <table border="0" cellpadding="0" cellspacing="0" class="tbl_type1 st3">
                             <caption>산출결과</caption>
@@ -460,29 +460,29 @@
                         </table>
                     </div>
                    
-                    <div class="section st1" id="divResult3" v-show="ScoreInput4Display">
-                        <h4>산출결과</h4>
-                        <table border="0" cellpadding="0" cellspacing="0" class="tbl_type1 st3">
-                            <caption>산출결과</caption>
-                            <colgroup>
-                                <col width="50%" />
-                                <col />
-                            </colgroup>
-                            <tbody>
-                                <tr>
-                                    <th>검정고시</th>
-                                    <th>평균점수</th>
-                                </tr>
-                                <tr>
-                                    <td colspan="2"><span id="RstTotalScore10">{{totalScore2}}</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div><!-- //section -->
+					<div class="section st1" id="divResult3" v-show="isShow3">
+						<h4>산출결과</h4>
+						<table border="0" cellpadding="0" cellspacing="0" class="tbl_type1 st3">
+							<caption>산출결과</caption>
+							<colgroup>
+								<col width="50%" />
+								<col />
+							</colgroup>
+							<tbody>
+								<tr>
+									<th>검정고시</th>
+									<th>평균점수</th>
+								</tr>
+								<tr>
+									<td colspan="2"><span id="RstTotalScore10">{{totalScore2}}</span></td>
+								</tr>
+							</tbody>
+						</table>
+					</div><!-- //section -->
                    
                     <div class="btn_area st1 center" id="div_1">
-                        <a href="javascript:void(0)" class="btn color1">성적산출</a>
-                        <a href="javascript:void(0)" class="btn color2">닫기</a>
+                        <a href="javascript:void(0)" class="btn color1" @click="ShowResult()">성적산출</a>
+                        <a href="javascript:void(0)" class="btn color2" @click="ResultRemove()">닫기</a>
                     </div>
                 </div>
             </div>
