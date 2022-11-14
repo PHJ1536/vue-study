@@ -1,493 +1,325 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="format-detection" content="telephone=no" />
     <link rel="stylesheet" href="./css/default.css" type="text/css">
-    <title>내신성적산출</title>
+    <title>동서대 수능성적산출</title>
 </head>
 
 <body>
-    <div id="wrap" class="blue full">
-        <div id="header">
-            <h1 class=""><img v-bind:src="'./img/'+BasicInfo.UnivID+'.gif'" v-bind:alt="BasicInfo.UnivName" /></h1>
-        </div>
-        <div id="container">
-            <div id="content">
+    <p id="skip" class="blind">
+        <a href="#header">메인메뉴 바로가기</a>
+        <a herf="#content">본문 바로가기</a>
+    </p>
 
-                <!-- 상단 안내사항 -->
-                <div class="top_visual">
+    <div id="wrap" class="red full">
+        <div id="header">
+            <h1 class=""><img src="img/1057.gif" alt="동서대학교" /></h1>
+        </div>
+
+        <div id="container">
+            <div id="contents">
+                <div id="top_visual">
                     <div class="txt_area">
                         <div class="tit">
-                            <em>{{BasicInfo.ServiceYear}}학년도 수시 모집</em>
-                            <h2>{{BasicInfo.UnivName}} 학생부성적산출</h2>
+                            <em>2023학년도 정시 모집</em>
+                            <h2>동서대학교 수능산출</h2>
                         </div>
                         <div class="top_notice">
                             <h3 class="notice_tit">반드시 읽어보세요!</h3>
-                            <p class="description">본 프로그램은 본교 지원 학생들의 성적산출을 위해 제공되는 프로그램으로 <br />학생들의 입력값에 따라 최종 결과가 상이할
-                                수 있으니 단순 참고용으로 사용하시기 바랍니다.</p>
-                            <p class="btn_area"><a
-                                    href="https://www.gnu.ac.kr/new/cm/cntnts/cntntsView.do?sysId=new&cntntsId=5495&mi=4928"
-                                    title="학교생활기록부 반영방법" class="btn st1" target="_blank">학교생활기록부 반영방법 <i
-                                        class="arr"></i></a></p>
+                            <p class="description">성적산출 프로그램은 본교 지원 학생들의 성적 산출을 위해 제공되는 프로그램으로 학생들의 입력값에 따라 최종결과가 상이할 수
+                                있으니 단순 참고용으로 사용하시기 바랍니다.</p>
+                            <p class="btn_area"><a href="https://ipsi.dongseo.ac.kr/ipsi/index.php?pCode=js_curyear"
+                                    title="모집요강보기" class="btn st1">요강보기<i class="arr"></i></a></p>
                         </div>
                     </div>
                     <div class="img_area">
+                        <img src="img/univ_1057.jpg" class="univ_img" />
                         <div class="over"></div>
                     </div>
                 </div>
-
                 <div class="content_area">
-
-                    <div class="section st1" @click="ResultRemove()">
-                        <h4>지원구분</h4>
-                        <table border="0" cellpadding="0" cellspacing="0" class="tbl_type1 st1">
-                            <caption>지원구분</caption>
-                            <colgroup>
-                                <col width="15%" />
-                                <col width="*" />
-                            </colgroup>
-                            <tbody>
-                                <tr>
-                                    <th colspan="2">졸업구분</th>
-                                    <td>
-                                        <ul class="checkbox st1">
-                                            <li v-for="item in BasicInfo.ScholarShip">
-                                                <input type="radio" v-model="ScholarShip" :id="'rdoScholarship'+item.value" :value="item.value" name="rdoScholarship">
-                                                <label :for="'rdoScholarship'+item.value" class="check">{{item.text}}</label>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th rowspan="2">졸업구분</th>
-                                    <th>학생부교과</th>
-                                    <td>
-                                        <ul class="checkbox st1">
-                                            <li v-for="item in SelTypeGroup1">
-                                                <input type="radio" v-model="SelTypeCode" :id="'rdoSelType'+item.value" :value="item.value" name="rdoSelType">
-                                                <label :for="'rdoSelType'+item.value" class="check">{{item.text}}</label>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>실기/실적</th>
-                                    <td>
-                                        <ul class="checkbox st1">
-                                            <li v-for="item in SelTypeGroup2">
-                                                <input type="radio" v-model="SelTypeCode" :id="'rdoSelType'+item.value" :value="item.value" name="rdoSelType">
-                                                <label :for="'rdoSelType'+item.value" class="check">{{item.text}}</label>
-                                            </li>
-                                        </ul>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div><!-- //section -->
-
-                    <div class="section st1" v-show="ScoreInput1Display || ScoreInput2Display">
-                        <h4>교과 성적 입력</h4>
-                        <table border="0" cellpadding="0" cellspacing="0" class="tbl_type1 st2" id="tb1">
-                            <caption>교과성적 입력</caption>
-                            <colgroup>
-                                <col width="12%" />
-                                <col width="14%" />
-                                <col width="14%" />
-                                <col width="12%" />
-                                <col width="12%" />
-                                <col width="12%" />
-                                <col width="12%" />
-                                <col width="12%" />
-                            </colgroup>
-                            <thead>
-                                <tr>
-                                    <th rowspan="2">학년</th>
-                                    <th rowspan="2">교과</th>
-                                    <th rowspan="2">교과목</th>
-                                    <th colspan="2">1학기</th>
-                                    <th colspan="2">2학기</th>
-                                    <th rowspan="2">삭제</th>
-                                </tr>
-                                <tr>
-                                    <th>이수단위</th>
-                                    <th>과목등급</th>
-                                    <th>이수단위</th>
-                                    <th>과목등급</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="(item, idx) in ScoreInput1" :key="'scoreInput'+idx">
-                                    <td>
-                                        <select v-model="item.Year" class="type1">
-                                            <option value="">:: 선택 ::</option>
-                                            <option value="1">1학년</option>
-                                            <option value="2">2학년</option>
-                                            <option value="3">3학년</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <select v-model="item.Subject" class="type1">
-                                            <option value="">:: 선택 ::</option>
-                                            <option value="1">국어</option>
-                                            <option value="2">영어</option>
-                                            <option value="3">수학</option>
-                                            <option value="4">사회</option>
-                                            <option value="5">과학</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <input type="text" v-model="item.SubjectText"/>
-                                    </td>
-                                    <td><input type="number" min="1" max="9" v-model="item.Unit1" class="type1 st2"/></td>
-                                    <td><input type="number" min="1" max="9" v-model="item.Grade1" class="type1 st2"/></td>
-                                    <td><input type="number" min="1" max="9" v-model="item.Unit2" class="type1 st2"/></td>
-                                    <td><input type="number" min="1" max="9" v-model="item.Grade2" class="type1 st2"/></td>
-                                    <td class="del">
-                                        <a href="javascript:void(0)" @click="RemoveScoreInput1(idx)" title="삭제"></a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div class="btn_area right">
-                            <a href="javascript:void(0)" @click="AddScoreInput1()" class="btn st3 add">과목 추가</a>
+                    <form>
+                        <div class="section st1">
+                            <h4>지원구분 선택</h4>
+                            <table border="0" cellpadding="0" cellspacing="0" class="tb1_type1 st1">
+                                <caption>지원구분 선택</caption>
+                                <tbody>
+                                    <tr>
+                                        <th>고교 졸업구분</th>
+                                        <td>
+                                            <ul class="checkbox st1">
+                                                <li>
+                                                    <input id="rdoScholarship1" type="radio" value="1" name="rdoScholarship">
+                                                    <label for="rdoScholarship1" class="check">2023년 졸업예정자 및 졸업자</label>
+                                                </li>
+                                                <li>
+                                                    <input id="rdoScholarship2" type="radio" value="2" name="rdoScholarship">
+                                                    <label for="rdoScholarship2" class="check">검정고시 출신자</label>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>전형유형 선택</th>
+                                        <td>
+                                            <ul class="checkbox st1">
+                                                <li>
+                                                    <input id="rdoScholarship1" type="radio" value="1" name="rdoScholarship">
+                                                    <label for="rdoScholarship1" class="check">일반전형(수능100%)</label>
+                                                </li>
+                                                <li>
+                                                    <input id="rdoScholarship2" type="radio" value="2" name="rdoScholarship">
+                                                    <label for="rdoScholarship2" class="check">실기전형(수능20%+실기80%)</label>
+                                                </li>
+                                                <li>
+                                                    <input id="rdoScholarship3" type="radio" value="3" name="rdoScholarship">
+                                                    <label for="rdoScholarship3" class="check">평생학습자전형(학생부40%+면접60%)</label>
+                                                </li>
+                                                <li>
+                                                    <input id="rdoScholarship4" type="radio" value="4" name="rdoScholarship">
+                                                    <label for="rdoScholarship4" class="check">농어촌출신자 전형(학생부100%)</label>
+                                                </li>
+                                                <li>
+                                                    <input id="rdoScholarship6" type="radio" value="6" name="rdoScholarship">
+                                                    <label for="rdoScholarship6" class="check">특성화동일계출신자 전형(학생부100%)</label>
+                                                </li>
+                                                <li>
+                                                    <input id="rdoScholarship5" type="radio" value="5" name="rdoScholarship">
+                                                    <label for="rdoScholarship5" class="check">고른기회 전형(학생부100%)</label>
+                                                </li>
+                                                <li>
+                                                    <input id="rdoScholarship7" type="radio" value="7" name="rdoScholarship">
+                                                    <label for="rdoScholarship7" class="check">성인학습자 전형(학생부100%)</label>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
-                    </div>
-                   
-                    <div class="section st1" v-show="ScoreInput3Display">
-                        <h4>교과 성적 입력</h4>
-                        <table border="0" cellpadding="0" cellspacing="0" class="tbl_type1 st2" id="tb2">
-                            <tbody>
+
+                        <div class="section st1" id="scoreInput" style="display:none;">
+                            <h4>학생부 성적 입력</h4>
+                            <table border="0" cellpadding="0" cellspacing="0" class="tb1_type1 st2" id="TableG_1">
+                                <colgroup>
+                                    <col width="15%" /><col /><col /><col /><col /><col /><col /><col /><col /><col /><col />
+                                </colgroup>
+                                <tbody>
+                                    <tr>
+                                        <th rowspan="2">구분</th>
+                                        <th colspan="3">필수교과 3과목</th>
+                                        <th colspan="7">필수교과 7과목</th>
+                                    </tr>
+                                    <tr>
+                                        <th class="st2">과목1</th>
+                                        <th class="st2">과목2</th>
+                                        <th class="st2">과목3</th>
+                                        <th class="st2">과목1</th>
+                                        <th class="st2">과목2</th>
+                                        <th class="st2">과목3</th>
+                                        <th class="st2">과목4</th>
+                                        <th class="st2">과목5</th>
+                                        <th class="st2">과목6</th>
+                                        <th class="st2">과목7</th>
+                                    </tr>
+                                    <tr>
+                                        <th class="st2">과목명</th>
+                                        <td><input type="text" name="Subject1" id="Subject1" maxlength="10" class="type1 st2" /></td>
+                                        <td><input type="text" name="Subject2" id="Subject2" maxlength="10" class="type1 st2" /></td>
+                                        <td><input type="text" name="Subject3" id="Subject3" maxlength="10" class="type1 st2" /></td>
+                                        <td><input type="text" name="Subject4" id="Subject4" maxlength="10" class="type1 st2" /></td>
+                                        <td><input type="text" name="Subject5" id="Subject5" maxlength="10" class="type1 st2" /></td>
+                                        <td><input type="text" name="Subject6" id="Subject6" maxlength="10" class="type1 st2" /></td>
+                                        <td><input type="text" name="Subject7" id="Subject7" maxlength="10" class="type1 st2" /></td>
+                                        <td><input type="text" name="Subject8" id="Subject8" maxlength="10" class="type1 st2" /></td>
+                                        <td><input type="text" name="Subject9" id="Subject9" maxlength="10" class="type1 st2" /></td>
+                                        <td><input type="text" name="Subject10" id="Subject10" maxlength="10" class="type1 st2" /></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="st2">등급</th>
+                                        <td><input type="number" min="1" name="Grade1" maxlength="2" class="type1 st2" onblur="checkCount(this, '등급은')" setgrade="1" /></td>
+                                        <td><input type="number" min="1" name="Grade2" maxlength="2" class="type1 st2" onblur="checkCount(this, '등급은')" setgrade="2" /></td>
+                                        <td><input type="number" min="1" name="Grade3" maxlength="2" class="type1 st2" onblur="checkCount(this, '등급은')" setgrade="3" /></td>
+                                        <td><input type="number" min="1" name="Grade4" maxlength="2" class="type1 st2" onblur="checkCount(this, '등급은')" setgrade="4" /></td>
+                                        <td><input type="number" min="1" name="Grade5" maxlength="2" class="type1 st2" onblur="checkCount(this, '등급은')" setgrade="5" /></td>
+                                        <td><input type="number" min="1" name="Grade6" maxlength="2" class="type1 st2" onblur="checkCount(this, '등급은')" setgrade="6" /></td>
+                                        <td><input type="number" min="1" name="Grade7" maxlength="2" class="type1 st2" onblur="checkCount(this, '등급은')" setgrade="7" /></td>
+                                        <td><input type="number" min="1" name="Grade8" maxlength="2" class="type1 st2" onblur="checkCount(this, '등급은')" setgrade="8" /></td>
+                                        <td><input type="number" min="1" name="Grade9" maxlength="2" class="type1 st2" onblur="checkCount(this, '등급은')" setgrade="9" /></td>
+                                        <td><input type="number" min="1" name="Grade10" maxlength="2" class="type1 st2" onblur="checkCount(this, '등급은')" setgrade="10" /></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p class="btn area">※ 우리대학교 학교생활기록부 성적 반영방법에 의하여 추출한 10과목의 과목명과 등급을 입력함.<span style="color:blue;">(과목명은 생략 가능함)</span></p>
+                            <p class="btn_area">※ 진로 선택 과목 성취도 반영방법 : (A:1등급, B:3등급, C:5등급)</p>
+                            <p class="btn_area">※ 진로 선택 과목 최대 2과목 반영</p>
+                        </div>
+
+                        <div class="btn_area st1 center" id="divButton" style="display:none;">
+                            <a href="javascript:void(0)" class="btn color1" onclick="Calculate2();">성적산출</a>
+                            <a href="javascript:void(0)" class="btn color2" onclick="ReInput();">다시입력</a>
+                        </div>
+
+                        <div class="section st1" id="divResult" style="display:none;">
+                            <h4>산출결과</h4>
+                            <table border="0" cellpadding="0" cellspacing="0" class="tb1_type1 st3">
+                                <colgroup>
+                                    <col width="50%"> <col width="50%">
+                                </colgroup>
+                                <tbody>
+                                    <tr>
+                                        <th>평균등급</th>
+                                        <td><span id="GTotal"></span> 등급</td>
+                                    </tr>
+                                    <tr>
+                                        <th>환산점수</th>
+                                        <td><span id="RTotal"></span> 점 / <span id="MTotal"></span> 만점</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="section st1" id="scoreInput2" style="display:none;">
+                            <h4>대학수학능력시험</h4>
+                            <table border="0" cellpadding="0" cellspacing="0" class="tb1_type1 st3" id="table2">
+                                <caption>대학수학능력시험</caption>
+                                <colgroup>
+                                    <col width="13%" /><col width="13%" /><col width="17%" /><col width="13%" /><col width="*" />
+                                </colgroup>
                                 <thead>
                                     <tr>
-                                        <th rowspan="2">학년</th>
-                                        <th rowspan="2">교과</th>
-                                        <th rowspan="2">교과목</th>
-                                        <th colspan="4">1학기</th>
-                                        <th colspan="4">2학기</th>
-                                        <th rowspan="2">삭제</th>
-                                    </tr>
-                                    <tr>
-                                        <th class="st2">이수단위</th>
-                                        <th class="st2">석차</th>
-                                        <th class="st2">동석차</th>
-                                        <th class="st2">재적수</th>
-                                        <th class="st2">이수단위</th>
-                                        <th class="st2">석차</th>
-                                        <th class="st2">동석차</th>
-                                        <th class="st2">재적수</th>
+                                        <th colspan="3">수능영역</th>
+                                        <th colspan="2">점수입력</th>
                                     </tr>
                                 </thead>
-                                <tr v-for="(item, idx) in ScoreInput2" :key="'scoreInput'+idx">
-                                    <td>
-                                        <select  v-model="item.Year">
-                                            <option value="">:: 선택 ::</option>
-                                            <option value="1">1학년</option>
-                                            <option value="2">2학년</option>
-                                            <option value="3">3학년</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <select v-model="item.Subject">
-                                            <option value="">:: 선택 ::</option>
-                                            <option value="1">국어</option>
-                                            <option value="2">영어</option>
-                                            <option value="3">수학</option>
-                                            <option value="4">사회</option>
-                                            <option value="5">과학</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <input type="text"  v-model="item.SubjectText">
-                                    </td>
-                                    <td><input type="text" class="type1 st2"  v-model="item.Unit1" size="3" maxlength="2"></td>
-                                    <td><input type="text" class="type1 st2"  v-model="item.Grade1"  size="3" maxlength="2"></td>
-                                    <td><input type="text" class="type1 st2"  v-model="item.SameGrade1"  size="3" maxlength="2"></td>
-                                    <td><input type="text" class="type1 st2"  v-model="item.Jaejeok1" size="3" maxlength="3"></td>
-                                    <td><input type="text" class="type1 st2"  v-model="item.Unit2" size="3" maxlength="2"></td>
-                                    <td><input type="text" class="type1 st2"  v-model="item.Grade2"  size="3" maxlength="2"></td>
-                                    <td><input type="text" class="type1 st2"  v-model="item.SameGrade2"  size="3" maxlength="2"></td>
-                                    <td><input type="text" class="type1 st2"  v-model="item.Jaejeok2" size="3" maxlength="3"></td>
-                                   
-                                    <td class="del">
-                                        <a href="javascript:void(0)" @click="RemoveScoreInput2(idx)" title="삭제"></a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div class="btn_area right">
-                            <a href="javascript:void(0)" @click="AddScoreInput2()" class="btn st3 add">과목 추가</a>
+                                <tbody>
+                                    <tr>
+                                        <th colspan="3">국어영역</th>
+                                        <td>표준점수</td>
+                                        <td><input type="number" id="KorScore" class="type1 st3" /> 점</td>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="3">수학영역</th>
+                                        <td>표준점수</td>
+                                        <td><input type="number" id="MathScore" class="type1 st3" /> 점</td>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="3">영어영역</th>
+                                        <td>등급</td>
+                                        <td>
+                                            <select id="cboEnglish" class="type1" style="width:22%">
+                                                <option value="NO">선택</option>
+                                                <option value="1">1등급</option>
+                                                <option value="2">2등급</option>
+                                                <option value="3">3등급</option>
+                                                <option value="4">4등급</option>
+                                                <option value="5">5등급</option>
+                                                <option value="6">6등급</option>
+                                                <option value="7">7등급</option>
+                                                <option value="8">8등급</option>
+                                                <option value="9">9등급</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th colspan="3">탐구영역<br><span style="font-size:10px;">(* 상위 1과목)</span></th>
+                                        <td>표준점수</td>
+                                        <td><input type="number" id="ResScore" class="type1 st3" /> 점</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
-                    </div>
 
-                    <div class="section st1" v-show="ScoreInput1Display">
-                        <h4>진로 선택(대체)과목</h4>
-                        <table border="0" cellpadding="0" cellspacing="0" class="tbl_type1 st2" id="tb3">
-                            <caption>교과성적 입력</caption>
-                            <colgroup>
-                                <col width="12%" />
-                                <col width="14%" />
-                                <col width="14%" />
-                                <col width="12%" />
-                                <col width="12%" />
-                                <col width="12%" />
-                                <col width="12%" />
-                                <col width="12%" />
-                            </colgroup>
-                            <thead>
-                                <tr>
-                                    <th rowspan="2">학년</th>
-                                    <th rowspan="2">교과</th>
-                                    <th rowspan="2">교과목</th>
-                                    <th colspan="2">1학기</th>
-                                    <th colspan="2">2학기</th>
-                                    <th rowspan="2">삭제</th>
-                                </tr>
-                                <tr>
-                                    <th>이수단위</th>
-                                    <th>과목등급</th>
-                                    <th>이수단위</th>
-                                    <th>과목등급</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="(item, idx) in ScoreInput3" :key="'scoreInput'+idx">
-                                    <td>
-                                        <select  v-model="item.Year"  class="type1">
-                                            <option value="">:: 선택 ::</option>
-                                            <option value="1">1학년</option>
-                                            <option value="2">2학년</option>
-                                            <option value="3">3학년</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <select  v-model="item.Subject"  class="type1">
-                                            <option value="">:: 선택 ::</option>
-                                            <option value="1">국어</option>
-                                            <option value="2">영어</option>
-                                            <option value="3">수학</option>
-                                            <option value="4">사회</option>
-                                            <option value="5">과학</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <input type="text" v-model="item.SubjectText"/>
-                                    </td>
-                                    <td><input type="number" min="1" max="9" v-model="item.Unit1" class="type1 st2"/></td>
-                                    <td>
-                                        <select id="cboUnit1_3" v-model="item.Grade1" class="type1">
-                                            <option value="">:: 선택 ::</option>
-                                            <option value="1">A (90점 이상)</option>
-                                            <option value="2">A (80~89점)</option>
-                                            <option value="3">A (80점 미만)</option>
-                                            <option value="4">B (60점 이상)</option>
-                                            <option value="5">B (50~59점)</option>
-                                            <option value="6">B (50점 미만)</option>
-                                            <option value="7">C (30점 이상)</option>
-                                            <option value="8">C (20~52점)</option>
-                                            <option value="9">C (20점 미만)</option>
-                                        </select>
-                                    </td>
-                                    <td><input type="number" min="1" max="9" v-model="item.Unit2" class="type1 st2"/></td>
-                                    <td>
-                                        <select id="cboUnit2_3" v-model="item.Grade2" class="type1">
-                                            <option value="">:: 선택 ::</option>
-                                            <option value="1">A (90점 이상)</option>
-                                            <option value="2">A (80~89점)</option>
-                                            <option value="3">A (80점 미만)</option>
-                                            <option value="4">B (60점 이상)</option>
-                                            <option value="5">B (50~59점)</option>
-                                            <option value="6">B (50점 미만)</option>
-                                            <option value="7">C (30점 이상)</option>
-                                            <option value="8">C (20~52점)</option>
-                                            <option value="9">C (20점 미만)</option>
-                                        </select>
-                                    </td>
-                                    <td class="del">
-                                        <a href="javascript:void(0)" @click="RemoveScoreInput3(idx)" title="삭제"></a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div class="btn_area right">
-                            <a href="javascript:void(0)" @click="AddScoreInput3()" class="btn st3 add">과목 추가</a>
+                        <div class="btn_area st1 center" id="divButton2" style="display:none;">
+                            <inpu type="button" id="btnLastResult" class="btn color1" value="성적산출"></inpu>
+                            <inpu type="button" id="btnLastReset" class="btn color2" value="다시입력"></inpu>
                         </div>
-                    </div>
 
-                    <div class="section" v-show="ScoreInput1Display || ScoreInput2Display || ScoreInput3Display">
-                        <h4>출결성적</h4>
-                        <table border="0" cellpadding="0" cellspacing="0" class="tbl_type1 st2" id="tblAttend">
-                            <caption>출결성적</caption>
+                        <div class="section st1" id="divResult2" style="display:none;">
+                            <h4>산출결과</h4>
+                            <table border="0" cellpadding="0" cellspacing="0" class="tb1_type1 st3">
+                                <caption>산출결과</caption>
+                                <colgroup>
+                                    <col width="50%"> <col width="50%">
+                                </colgroup>
+                                <tbody>
+                                    <tr>
+                                        <th>점수</th>
+                                        <th><span id="RTotal2"></span> 점</th>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <input type="hidden" id="hdnEtc1"/>
+                        <input type="hidden" id="hdnEtc2"/>
+                        <input type="hidden" id="hdnEtc3"/>
+                    </form>
+                </div>
+            </div>
+
+            <div class="description_cont" id="divG" style="display:none;">
+                <div class="description_cont_area">
+                    <h3 class="explan_tit">검정고시출신자 지원 안내</h3>
+                    <div class="script_area">
+                        <p class="description li"><i class="type1"></i>평생학습자전형, 고른기회전형, 성인학습자전형에 지원 가능하며 전형유형별 제출서류는 해당 전형 페이지를 참조<br>(단, 공통제출 서류는 검정고시 성적표 -교육청 발행-)</p>
+                        <br>
+                        <p class="description li"><i class="type1"></i>검정고시 합격자 성적 환산 점수(전형 및 모집단위별 반영비율 확인)</p>
+
+                        <table border="0" cellpadding="0" cellspacing="0" class="tbl_type1 st3" style="margin: top 15px;">
+                            <caption>학교생활기록부 등급별 환산점수</caption>
                             <colgroup>
-                                <col width="*" /><col width="*" /><col width="*" /><col width="*" /><col width="20%" /><col width="20%" />
+                                <col width="10%"/><col width="10%"/><col width="10%"/><col width="10%"/><col width="10%"/><col width="10%"/><col width="10%"/><col width="10%"/><col width="10%"/><col width="10%"/>
                             </colgroup>
                             <thead>
                                 <tr>
-                                    <th colspan="4">사고(무단)으로 인한 지각, 조퇴, 결과 횟수</th>
-                                    <th rowspan="2">무단(사고) 결석</th>
-                                    <th rowspan="2">총 결석일 수</th>
-                                </tr>
-                                <tr>
-                                    <th class="st2">지각</th>
-                                    <th class="st2">조퇴</th>
-                                    <th class="st2">결과</th>
-                                    <th class="st2">결석일</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="item in Attendance">
-                                    <td><input type="number" min="0" v-model="item.Late" class="type1 st3"/> 회</td>
-                                    <td><input type="number" min="0" v-model="item.EarlyDepart" class="type1 st3"/> 회</td>
-                                    <td><input type="number" min="0" v-model="item.Absent" class="type1 st3"/> 회</td>
-                                    <td><input type="number" min="0" v-bind:value="totalAttend[0]" class="type1 st3"  disabled="disabled"/> 일</td>
-                                    <td><input type="number" min="0" v-model="item.Truancy" class="type1 st3"/> 일</td>
-                                    <td><input type="number" min="0" v-bind:value="totalAttend[1]" class="type1 st3" disabled="disabled"/>일</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="section st1"  v-show="ScoreInput4Display">
-                        <h4>교과 성적 입력</h4>
-                        <table border="0" cellpadding="0" cellspacing="0" class="tbl_type1 st2" id="TableG_2">
-                            <caption>검정고시출신자 입력</caption>
-                            <colgroup>
-                                <col width="33%" />
-                                <col width="33%" />
-                                <col />
-                            </colgroup>
-                            <thead>
-                                <tr align="center" class="til">
-                                    <th>교과</th>
-                                    <th>교과목</th>
-                                    <th>검정고시 취득성적</th>
+                                    <th></th>
+                                    <th>100~97.01</th>
+                                    <th>97~94.01</th>
+                                    <th>94~91.01</th>
+                                    <th>91~88.01</th>
+                                    <th>88~85.01</th>
+                                    <th>85~82.01</th>
+                                    <th>82~79.01</th>
+                                    <th>79~76.01</th>
+                                    <th>76~</th>
                                 </tr>
                             </thead>
-                            <tbody v-for="(item, idx) in ScoreInput4" :key="'scoreInput'+idx">
-                                <tr class="ti2">
-                                    <td class="td_3" colspan="2">국어</td>
-                                    <td><input type="text" class="type1 st3" id="txtNum1" v-model="item.Korean" size="3" maxlength="3"></td>
-                                </tr>
-                                <tr class="ti2">
-                                    <td class="td_3" colspan="2">영어</td>
-                                    <td><input type="text" class="type1 st3" id="txtNum2" v-model="item.English" size="3" maxlength="3"></td>
-                                </tr>
-                                <tr class="ti2">
-                                    <td class="td_3" colspan="2">수학</td>
-                                    <td><input type="text" class="type1 st3" id="txtNum3" v-model="item.Math" size="3" maxlength="3"></td>
-                                </tr>
-                                <tr class="ti2">
-                                    <td class="td_3" colspan="2">사회</td>
-                                    <td><input type="text" class="type1 st3" id="txtNum4" v-model="item.Social" size="3" maxlength="3"></td>
-                                </tr>
-                                <tr class="ti2">
-                                    <td class="td_3" colspan="2">과학</td>
-                                    <td><input type="text" class="type1 st3" id="txtNum5" v-model="item.Science" size="3" maxlength="3"></td>
-                                </tr>
-                                <tr class="ti2">
-                                    <td class="td_3" colspan="2">한국사</td>
-                                    <td><input type="text" class="type1 st3" id="txtNum6" v-model="item.History" size="3" maxlength="3"></td>
-                                </tr>
-                                <tr class="ti2">
-                                    <td class="td_3">선택</td>
-                                    <td><input type="text" class="type1 st3" /></td>
-                                    <td><input type="text" class="type1 st3" id="txtNum7" v-model="item.EtcSub" size="3" maxlength="3"></td>
-                                </tr>
-
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="section st1" id="divResult1" v-show="isShow1">
-                        <h4>산출결과</h4>
-                        <table border="0" cellpadding="0" cellspacing="0" class="tbl_type1 st3">
-                            <caption>산출결과</caption>
-                            <colgroup>
-                                <col width="33%" />
-                                <col width="33%" />
-                                <col />
-                            </colgroup>
                             <tbody>
                                 <tr>
-                                    <th>계열</th>
-                                    <th>등급</th>
-                                    <th>교과성적 반영점수</th>
+                                    <th class="st3">100%</th>
+                                    <td>1000</td>
+                                    <td>990</td>
+                                    <td>980</td>
+                                    <td>970</td>
+                                    <td>960</td>
+                                    <td>950</td>
+                                    <td>940</td>
+                                    <td>930</td>
+                                    <td>920</td>
                                 </tr>
                                 <tr>
-                                    <td>인문사회/예체능</td>
-                                    <td><span id="avgTotalScore1">{{totalScore1[2]}}</span></td>
-                                    <td><span id="totalScore1">{{totalScore1[3]}}</span></td>
-                                </tr>
-                                <tr>
-                                    <td>자연</td>
-                                    <td><span id="avgTotalScore2">{{totalScore1[4]}}</span></td>
-                                    <td><span id="totalScore2">{{totalScore1[5]}}</span></td>
-                                </tr>
-                                <tr>
-                                    <td>자유전공학부</td>
-                                    <td><span id="avgTotalScore3">{{totalScore1[0]}}</span></td>
-                                    <td><span id="totalScore3">{{totalScore1[1]}}</span></td>
+                                    <th class="st3">40%</th>
+                                    <td>400</td>
+                                    <td>390</td>
+                                    <td>380</td>
+                                    <td>370</td>
+                                    <td>360</td>
+                                    <td>350</td>
+                                    <td>340</td>
+                                    <td>330</td>
+                                    <td>320</td>
                                 </tr>
                             </tbody>
                         </table>
-                    </div>
-                   
-                    <div class="section st1" id="divResult2" v-show="isShow2">
-                        <h4>산출결과</h4>
-                        <table border="0" cellpadding="0" cellspacing="0" class="tbl_type1 st3">
-                            <caption>산출결과</caption>
-                            <colgroup>
-                                <col width="25%" />
-                                <col width="25%" />
-                                <col width="25%" />
-                                <col />
-                            </colgroup>
-                            <tbody>
-                                <tr>
-                                    <th>계열</th>
-                                    <th>등급</th>
-                                    <th>교과성적 반영점수</th>
-                                    <th>출결성적</th>
-                                </tr>
-                                <tr>
-                                    <td>예체능</td>
-                                    <td><span id="RstTotalScore7">{{totalScore1[2]}}</span></td>
-                                    <td><span id="RstTotalScore8">{{totalScore1[3]}}</span></td>
-                                    <td><span id="RstTotalScore9">{{totalAttend[2]}}</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                   
-					<div class="section st1" id="divResult3" v-show="isShow3">
-						<h4>산출결과</h4>
-						<table border="0" cellpadding="0" cellspacing="0" class="tbl_type1 st3">
-							<caption>산출결과</caption>
-							<colgroup>
-								<col width="50%" />
-								<col />
-							</colgroup>
-							<tbody>
-								<tr>
-									<th>검정고시</th>
-									<th>평균점수</th>
-								</tr>
-								<tr>
-									<td colspan="2"><span id="RstTotalScore10">{{totalScore2}}</span></td>
-								</tr>
-							</tbody>
-						</table>
-					</div><!-- //section -->
-                   
-                    <div class="btn_area st1 center" id="div_1">
-                        <a href="javascript:void(0)" class="btn color1" @click="ShowResult()">성적산출</a>
-                        <a href="javascript:void(0)" class="btn color2" @click="ResultRemove()">닫기</a>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
 
     <script src="./js/vue.js"></script>
