@@ -240,6 +240,13 @@
       return [days, totalDays, attendDay];
     },
 
+    GetCalculateInput1 : function(){
+      return this.ScoreInput1.filter(function(input){
+        // 교과, 1,2, 이수 , 등급
+        return true;
+      });
+    },
+
     totalScore1: function () {
       let scoreSum = 0,
         unitSum = 0,
@@ -286,35 +293,44 @@
 
       if (this.ScholarShip == '1') {
 
-        this.ScoreInput1.forEach(function (data) {
+        this.GetCalculateInput1.forEach(function (data) {
           let unit1 = toNumber(data.Unit1),grade1 = toNumber(data.Grade1);
           let unit2 = toNumber(data.Unit2), grade2 = toNumber(data.Grade2);
 
           scoreSum += unit1 * grade1 + unit2 * grade2;
           unitSum += unit1 + unit2;
 
-          if (data.Subject == 1 || data.Subject == 2 | data.Subject == 3) { //공통 과목이면
-            JayuScoreSum += (unit1 * grade1 + unit2 * grade2);
-            JayuUnitSum += (unit1 + unit2);
-
-            InmunScoreSum += (unit1 * grade1 + unit2 * grade2);
-            InmunUnitSum += (unit1 + unit2);
-            NatureScoreSum += (unit1 * grade1 + unit2 * grade2);
-            NatureUnitSum += (unit1 + unit2);
-          } else if (data.Subject == 4) { //사회 과목이면
-            //인문사회/예체능
-            JayuScoreSum += (unit1 * grade1 + unit2 * grade2);
-            JayuUnitSum += (unit1 + unit2);
-            InmunScoreSum += (unit1 * grade1 + unit2 * grade2);
-            InmunUnitSum += (unit1 + unit2);
-          } else if (data.Subject == 5) { //과학 과목이면
-            //자연
-            JayuScoreSum += (unit1 * grade1 + unit2 * grade2);
-            JayuUnitSum += (unit1 + unit2);
-            NatureScoreSum += (unit1 * grade1 + unit2 * grade2);
-            NatureUnitSum += (unit1 + unit2);
+          if(unit1>0 && unit2>0 && grade1>0 && grade2>0 && data.Subject!=0){
+            if (data.Subject == 1 || data.Subject == 2 | data.Subject == 3) { //공통 과목이면
+              JayuScoreSum += (unit1 * grade1 + unit2 * grade2);
+              JayuUnitSum += (unit1 + unit2);
+  
+              InmunScoreSum += (unit1 * grade1 + unit2 * grade2);
+              InmunUnitSum += (unit1 + unit2);
+              NatureScoreSum += (unit1 * grade1 + unit2 * grade2);
+              NatureUnitSum += (unit1 + unit2);
+            } else if (data.Subject == 4) { //사회 과목이면
+              //인문사회/예체능
+              JayuScoreSum += (unit1 * grade1 + unit2 * grade2);
+              JayuUnitSum += (unit1 + unit2);
+              InmunScoreSum += (unit1 * grade1 + unit2 * grade2);
+              InmunUnitSum += (unit1 + unit2);
+            } else if (data.Subject == 5) { //과학 과목이면
+              //자연
+              JayuScoreSum += (unit1 * grade1 + unit2 * grade2);
+              JayuUnitSum += (unit1 + unit2);
+              NatureScoreSum += (unit1 * grade1 + unit2 * grade2);
+              NatureUnitSum += (unit1 + unit2);
+            }
           }
-
+          else{
+            JayuScoreSum += 0;
+            JayuUnitSum += 0;
+            InmunScoreSum += 0;
+            InmunUnitSum += 0;
+            NatureScoreSum += 0;
+            NatureUnitSum += 0;
+          }
         }.bind(this));
         
         console.log("자유누적: ", JayuUnitSum);
@@ -329,26 +345,36 @@
           scoreSum += unit3 * grade3 + unit4 * grade4;
           unitSum += unit3 + unit4;
 
-          if (data.Subject == 1 || data.Subject == 2 | data.Subject == 3) { //공통 과목이면
-            JayuScoreSum += (unit3 * grade3 + unit4 * grade4);
-            JayuUnitSum += (unit3 + unit4);
-
-            InmunScoreSum += (unit3 * grade3 + unit4 * grade4);
-            InmunUnitSum += (unit3 + unit4);
-            NatureScoreSum += (unit3 * grade3 + unit4 * grade4);
-            NatureUnitSum += (unit3 + unit4);
-          } else if (data.Subject == 4) { //사회 과목이면
-            //인문사회/예체능
-            JayuScoreSum += (unit3 * grade3 + unit4 * grade4);
-            JayuUnitSum += (unit3 + unit4);
-            InmunScoreSum += (unit3 * grade3 + unit4 * grade4);
-            InmunUnitSum += (unit3 + unit4);
-          } else if (data.Subject == 5) { //과학 과목이면
-            //자연
-            JayuScoreSum += (unit3 * grade3 + unit4 * grade4);
-            JayuUnitSum += (unit3 + unit4);
-            NatureScoreSum += (unit3 * grade3 + unit4 * grade4);
-            NatureUnitSum += (unit3 + unit4);
+          if(unit3>0 && unit4>0 && grade3>0 && grade4>0 && data.Subject!=0){
+            if (data.Subject == 1 || data.Subject == 2 | data.Subject == 3) { //공통 과목이면
+              JayuScoreSum += (unit3 * grade3 + unit4 * grade4);
+              JayuUnitSum += (unit3 + unit4);
+  
+              InmunScoreSum += (unit3 * grade3 + unit4 * grade4);
+              InmunUnitSum += (unit3 + unit4);
+              NatureScoreSum += (unit3 * grade3 + unit4 * grade4);
+              NatureUnitSum += (unit3 + unit4);
+            } else if (data.Subject == 4) { //사회 과목이면
+              //인문사회/예체능
+              JayuScoreSum += (unit3 * grade3 + unit4 * grade4);
+              JayuUnitSum += (unit3 + unit4);
+              InmunScoreSum += (unit3 * grade3 + unit4 * grade4);
+              InmunUnitSum += (unit3 + unit4);
+            } else if (data.Subject == 5) { //과학 과목이면
+              //자연
+              JayuScoreSum += (unit3 * grade3 + unit4 * grade4);
+              JayuUnitSum += (unit3 + unit4);
+              NatureScoreSum += (unit3 * grade3 + unit4 * grade4);
+              NatureUnitSum += (unit3 + unit4);
+            }
+          }
+          else{
+            JayuScoreSum += 0;
+            JayuUnitSum += 0;
+            InmunScoreSum += 0;
+            InmunUnitSum += 0;
+            NatureScoreSum += 0;
+            NatureUnitSum += 0;
           }
         }.bind(this))
 
@@ -373,12 +399,23 @@
           InmunSubjectScore = toNumber(((9 - InmunAvgUnit) * (300 / 8)).toFixed(2));
         }
 
-        if (NatureAvgUnit == 0) {
+        if (NatureAvgUnit == 0 && InmunAvgUnit == 0)
+        {
           NatureAvgUnit = null;
           NatureSubjectScore = null;
-        } else if (InmunAvgUnit == 0) {
           InmunAvgUnit = null;
-          InmunSubjectScore = null;;
+          InmunSubjectScore = null;
+          JayuAvgUnit = null;
+          JayuSubjectScore = null;
+        }
+        else{
+          if (NatureAvgUnit == 0) {
+            NatureAvgUnit = null;
+            NatureSubjectScore = null;
+          } if (InmunAvgUnit == 0) {
+            InmunAvgUnit = null;
+            InmunSubjectScore = null;
+          } 
         }
       }
 
@@ -390,26 +427,36 @@
             scoreSum += unit1 * grade1 + unit2 * grade2;
             unitSum += unit1 + unit2;
 
-            if (data.Subject == 1 || data.Subject == 2 | data.Subject == 3) { //공통 과목이면
-              JayuScoreSum += (unit1 * grade1 + unit2 * grade2);
-              JayuUnitSum += (unit1 + unit2);
-
-              InmunScoreSum += (unit1 * grade1 + unit2 * grade2);
-              InmunUnitSum += (unit1 + unit2);
-              NatureScoreSum += (unit1 * grade1 + unit2 * grade2);
-              NatureUnitSum += (unit1 + unit2);
-            } else if (data.Subject == 4) { //사회 과목이면
-              //인문사회/예체능
-              JayuScoreSum += (unit1 * grade1 + unit2 * grade2);
-              JayuUnitSum += (unit1 + unit2);
-              InmunScoreSum += (unit1 * grade1 + unit2 * grade2);
-              InmunUnitSum += (unit1 + unit2);
-            } else if (data.Subject == 5) { //과학 과목이면
-              //자연
-              JayuScoreSum += (unit1 * grade1 + unit2 * grade2);
-              JayuUnitSum += (unit1 + unit2);
-              NatureScoreSum += (unit1 * grade1 + unit2 * grade2);
-              NatureUnitSum += (unit1 + unit2);
+            if(unit1>0 && unit2>0 && grade1>0 && grade2>0 && data.Subject!=0){
+              if (data.Subject == 1 || data.Subject == 2 | data.Subject == 3) { //공통 과목이면
+                JayuScoreSum += (unit1 * grade1 + unit2 * grade2);
+                JayuUnitSum += (unit1 + unit2);
+    
+                InmunScoreSum += (unit1 * grade1 + unit2 * grade2);
+                InmunUnitSum += (unit1 + unit2);
+                NatureScoreSum += (unit1 * grade1 + unit2 * grade2);
+                NatureUnitSum += (unit1 + unit2);
+              } else if (data.Subject == 4) { //사회 과목이면
+                //인문사회/예체능
+                JayuScoreSum += (unit1 * grade1 + unit2 * grade2);
+                JayuUnitSum += (unit1 + unit2);
+                InmunScoreSum += (unit1 * grade1 + unit2 * grade2);
+                InmunUnitSum += (unit1 + unit2);
+              } else if (data.Subject == 5) { //과학 과목이면
+                //자연
+                JayuScoreSum += (unit1 * grade1 + unit2 * grade2);
+                JayuUnitSum += (unit1 + unit2);
+                NatureScoreSum += (unit1 * grade1 + unit2 * grade2);
+                NatureUnitSum += (unit1 + unit2);
+              }
+            }
+            else{
+              JayuScoreSum += 0;
+              JayuUnitSum += 0;
+              InmunScoreSum += 0;
+              InmunUnitSum += 0;
+              NatureScoreSum += 0;
+              NatureUnitSum += 0;
             }
 
             console.log("자유누적: ", JayuUnitSum);
@@ -433,12 +480,23 @@
               InmunSubjectScore = toNumber(((9 - InmunAvgUnit) * (300 / 8)).toFixed(2));
             }
 
-            if (NatureAvgUnit == 0) {
+            if (NatureAvgUnit == 0 && InmunAvgUnit == 0)
+            {
               NatureAvgUnit = null;
               NatureSubjectScore = null;
-            } else if (InmunAvgUnit == 0) {
               InmunAvgUnit = null;
-              InmunSubjectScore = null;;
+              InmunSubjectScore = null;
+              JayuAvgUnit = null;
+              JayuSubjectScore = null;
+            }
+            else{
+              if (NatureAvgUnit == 0) {
+                NatureAvgUnit = null;
+                NatureSubjectScore = null;
+              } if (InmunAvgUnit == 0) {
+                InmunAvgUnit = null;
+                InmunSubjectScore = null;
+              } 
             }
           }.bind(this) //SelTypeCode가 바깥에 선언되어있어서 연결?시켜줌...
         )
@@ -457,104 +515,113 @@
           midValue2 =midGrade(((grade2 / jaeJeok2)*100).toFixed(2));
           midValue2_2 =midGrade(((grade2 / sameGrade2 - 1 / 2)*100/jaeJeok2).toFixed(2));
 
-
-          if(data.Subject == 1 || data.Subject == 2 | data.Subject == 3){
-            if(sameGrade1 == '0'){ //1학기 동석차가 없음
-              JayuScoreSum += unit1 * midValue1;
-              JayuUnitSum += unit1;
-
-              InmunScoreSum += unit1 * midValue1;
-              InmunUnitSum += unit1;
-              NatureScoreSum += unit1 * midValue1;
-              NatureUnitSum += unit1;
+          if(midValue1>0 && midValue1_2>0 && midValue2>0 && midValue2_2>0 && data.Subject!=0){
+            if(data.Subject == 1 || data.Subject == 2 | data.Subject == 3){
+              if(sameGrade1 == '0'){ //1학기 동석차가 없음
+                JayuScoreSum += unit1 * midValue1;
+                JayuUnitSum += unit1;
+  
+                InmunScoreSum += unit1 * midValue1;
+                InmunUnitSum += unit1;
+                NatureScoreSum += unit1 * midValue1;
+                NatureUnitSum += unit1;
+              }
+              else{ //1학기 동석차가 있음
+                JayuScoreSum += unit1 * midValue1_2;
+                JayuUnitSum += unit1;
+  
+                InmunScoreSum += unit1 *midValue1_2;
+                InmunUnitSum += unit1;
+                NatureScoreSum += unit1 * midValue1_2;
+                NatureUnitSum += unit1;
+              }
+              if(sameGrade2 == '0'){ //2학기 동석차가 없음
+                JayuScoreSum += unit2 * midValue2;
+                JayuUnitSum += unit2;
+  
+                InmunScoreSum += unit2 * midValue2;
+                InmunUnitSum += unit2;
+                NatureScoreSum += unit2 * midValue2;
+                NatureUnitSum += unit2;
+              }
+              else{ //2학기 동석차가 있음
+                JayuScoreSum += unit2 * midValue2_2;
+                JayuUnitSum += unit2;
+  
+                InmunScoreSum += unit2 * midValue2_2;
+                InmunUnitSum += unit2;
+                NatureScoreSum += unit2 * midValue2_2;
+                NatureUnitSum += unit2;
+              }
             }
-            else{ //1학기 동석차가 있음
-              JayuScoreSum += unit1 * midValue1_2;
-              JayuUnitSum += unit1;
-
-              InmunScoreSum += unit1 *midValue1_2;
-              InmunUnitSum += unit1;
-              NatureScoreSum += unit1 * midValue1_2;
-              NatureUnitSum += unit1;
+            else if(data.Subject == 4){
+              if(sameGrade1 == 0){ //1학기 동석차가 없음
+                JayuScoreSum += unit1 * midValue1;
+                JayuUnitSum += unit1;
+  
+                InmunScoreSum += unit1 * midValue1;
+                InmunUnitSum += unit1;
+              }
+              else{ //1학기 동석차가 있음
+                JayuScoreSum += unit1 * midValue1_2;
+                JayuUnitSum += unit1;
+  
+                InmunScoreSum += unit1 * midValue1_2;
+                InmunUnitSum += unit1;
+              }
+              if(sameGrade2 == 0){ //2학기 동석차가 없음
+                JayuScoreSum += unit2 * midValue2;
+                JayuUnitSum += unit2;
+  
+                InmunScoreSum += unit2 * midValue2;
+                InmunUnitSum += unit2;
+              }
+              else{ //2학기 동석차가 있음
+                JayuScoreSum += unit2 * midValue2_2;
+                JayuUnitSum += unit2;
+  
+                InmunScoreSum += unit2 * midValue2_2;
+                InmunUnitSum += unit2;
+              }
             }
-            if(sameGrade2 == '0'){ //2학기 동석차가 없음
-              JayuScoreSum += unit2 * midValue2;
-              JayuUnitSum += unit2;
-
-              InmunScoreSum += unit2 * midValue2;
-              InmunUnitSum += unit2;
-              NatureScoreSum += unit2 * midValue2;
-              NatureUnitSum += unit2;
-            }
-            else{ //2학기 동석차가 있음
-              JayuScoreSum += unit2 * midValue2_2;
-              JayuUnitSum += unit2;
-
-              InmunScoreSum += unit2 * midValue2_2;
-              InmunUnitSum += unit2;
-              NatureScoreSum += unit2 * midValue2_2;
-              NatureUnitSum += unit2;
+            else if(data.Subject == 5){
+              if(sameGrade1 == 0){ //1학기 동석차가 없음
+                JayuScoreSum += unit1 * midValue1;
+                JayuUnitSum += unit1;
+  
+                NatureScoreSum += unit1 * midValue1;
+                NatureUnitSum += unit1;
+              }
+              else{ //1학기 동석차가 있음
+                JayuScoreSum += unit1 * midValue1_2;
+                JayuUnitSum += unit1;
+  
+                NatureScoreSum += unit1 * midValue1_2;
+                NatureUnitSum += unit1;
+              }
+              if(sameGrade2 == 0){ //2학기 동석차가 없음
+                JayuScoreSum += unit2 * midValue2;
+                JayuUnitSum += unit2;
+  
+                NatureScoreSum += unit2 * midValue2;
+                NatureUnitSum += unit2;
+              }
+              else{ //2학기 동석차가 있음
+                JayuScoreSum += unit2 * midValue2_2;
+                JayuUnitSum += unit2;
+  
+                NatureScoreSum += unit2 * midValue2_2;
+                NatureUnitSum += unit2;
+              }
             }
           }
-          else if(data.Subject == 4){
-            if(sameGrade1 == 0){ //1학기 동석차가 없음
-              JayuScoreSum += unit1 * midValue1;
-              JayuUnitSum += unit1;
-
-              InmunScoreSum += unit1 * midValue1;
-              InmunUnitSum += unit1;
-            }
-            else{ //1학기 동석차가 있음
-              JayuScoreSum += unit1 * midValue1_2;
-              JayuUnitSum += unit1;
-
-              InmunScoreSum += unit1 * midValue1_2;
-              InmunUnitSum += unit1;
-            }
-            if(sameGrade2 == 0){ //2학기 동석차가 없음
-              JayuScoreSum += unit2 * midValue2;
-              JayuUnitSum += unit2;
-
-              InmunScoreSum += unit2 * midValue2;
-              InmunUnitSum += unit2;
-            }
-            else{ //2학기 동석차가 있음
-              JayuScoreSum += unit2 * midValue2_2;
-              JayuUnitSum += unit2;
-
-              InmunScoreSum += unit2 * midValue2_2;
-              InmunUnitSum += unit2;
-            }
-          }
-          else if(data.Subject == 5){
-            if(sameGrade1 == 0){ //1학기 동석차가 없음
-              JayuScoreSum += unit1 * midValue1;
-              JayuUnitSum += unit1;
-
-              NatureScoreSum += unit1 * midValue1;
-              NatureUnitSum += unit1;
-            }
-            else{ //1학기 동석차가 있음
-              JayuScoreSum += unit1 * midValue1_2;
-              JayuUnitSum += unit1;
-
-              NatureScoreSum += unit1 * midValue1_2;
-              NatureUnitSum += unit1;
-            }
-            if(sameGrade2 == 0){ //2학기 동석차가 없음
-              JayuScoreSum += unit2 * midValue2;
-              JayuUnitSum += unit2;
-
-              NatureScoreSum += unit2 * midValue2;
-              NatureUnitSum += unit2;
-            }
-            else{ //2학기 동석차가 있음
-              JayuScoreSum += unit2 * midValue2_2;
-              JayuUnitSum += unit2;
-
-              NatureScoreSum += unit2 * midValue2_2;
-              NatureUnitSum += unit2;
-            }
+          else{
+            NatureAvgUnit = null;
+            NatureSubjectScore = null;
+            InmunAvgUnit = null;
+            InmunSubjectScore = null;
+            JayuAvgUnit = null;
+            JayuSubjectScore = null;
           }
 
           console.log("자유누적: ", JayuUnitSum);
@@ -581,14 +648,27 @@
           console.log(data.Subject, unit1, unit2, grade1, grade2, sameGrade1, sameGrade2);
           console.log(InmunSubjectScore, NatureScoreSum, JayuSubjectScore);
 
-          if (NatureAvgUnit == 0) {
+          if (NatureAvgUnit == 0 && InmunAvgUnit == 0)
+          {
             NatureAvgUnit = null;
             NatureSubjectScore = null;
-          } else if (InmunAvgUnit == 0) {
             InmunAvgUnit = null;
-            InmunSubjectScore = null;;}
+            InmunSubjectScore = null;
+            JayuAvgUnit = null;
+            JayuSubjectScore = null;
+          }
+          else{
+            if (NatureAvgUnit == 0) {
+              NatureAvgUnit = null;
+              NatureSubjectScore = null;
+            } if (InmunAvgUnit == 0) {
+              InmunAvgUnit = null;
+              InmunSubjectScore = null;
+            } 
+          }
 
         }.bind(this) //SelTypeCode가 바깥에 선언되어있어서 연결?시켜줌...
+        
         )
 
       }
@@ -743,6 +823,11 @@
 
     ResultRemove: function() {
       this.isShow1=false, this.isShow2=false, this.isShow3=false;
+
+      this.ScoreInput1.splice(0,this.ScoreInput1.length,{...this.BasicInfo.DefaultScoreInput1});
+      this.ScoreInput2.splice(0,this.ScoreInput2.length,{...this.BasicInfo.DefaultScoreInput2});
+      this.ScoreInput3.splice(0,this.ScoreInput3.length,{...this.BasicInfo.DefaultScoreInput3});
+      this.ScoreInput4.splice(0,this.ScoreInput4.length,{...this.BasicInfo.DefaultScoreInput4});
     },
 
     ShowResult: function () {

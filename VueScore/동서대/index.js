@@ -111,8 +111,8 @@
     isShow3: false,
 
     // 실제 입력 데이터 연동
-    ScholarShip: '',
-    SelTypeCode: '',
+    ScholarShip: '1',
+    SelTypeCode: '1',
     ScoreInput1: [],
     ScoreInput2: [],
     ScoreInput3: [],
@@ -124,21 +124,21 @@
 
   created: function () {
 
-    let newItem = {...this.BasicInfo.DefaultScoreInput1};
-    this.ScoreInput1.push(newItem);
-    let newItem2 = {...this.BasicInfo.DefaultScoreInput1};
-    this.ScoreInput2.push(newItem2);
-    let newItem3 = {...this.BasicInfo.DefaultScoreInput1};
-    this.ScoreInput3.push(newItem3);
-    let newItem4 = {...this.BasicInfo.DefaultScoreInput1};
-    this.ScoreInput4.push(newItem4);
-    // this.AddScoreInput1Rnd();
-    // this.AddScoreInput2Rnd();
-    // this.AddScoreInput2Rnd();
-    // this.AddScoreInput2Rnd();
-    // this.AddScoreInput2Rnd();
-    // this.AddScoreInput3Rnd();
-    // this.AddScoreInput4Rnd();
+    // let newItem = {...this.BasicInfo.DefaultScoreInput1};
+    // this.ScoreInput1.push(newItem);
+    // let newItem2 = {...this.BasicInfo.DefaultScoreInput1};
+    // this.ScoreInput2.push(newItem2);
+    // let newItem3 = {...this.BasicInfo.DefaultScoreInput1};
+    // this.ScoreInput3.push(newItem3);
+    // let newItem4 = {...this.BasicInfo.DefaultScoreInput1};
+    // this.ScoreInput4.push(newItem4);
+    this.AddScoreInput1Rnd();
+    this.AddScoreInput2Rnd();
+    this.AddScoreInput2Rnd();
+    this.AddScoreInput2Rnd();
+    this.AddScoreInput2Rnd();
+    this.AddScoreInput3Rnd();
+    this.AddScoreInput4Rnd();
     let newItem5 = {...this.BasicInfo.DefaultAttendance};
     this.Attendance.push(newItem5);
   },
